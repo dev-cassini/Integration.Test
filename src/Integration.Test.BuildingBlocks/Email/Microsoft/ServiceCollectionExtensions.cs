@@ -24,8 +24,7 @@ public static class ServiceCollectionExtensions
         {
             var azureAd = provider.GetRequiredService<IOptions<AzureAd>>().Value;
             var clientSecretCredential = new ClientSecretCredential(azureAd.TenantId, azureAd.ClientId, azureAd.ClientSecret);
-            var graphServiceClient = new GraphServiceClient(clientSecretCredential, new List<string> { "Mail.Read" });
-
+            var graphServiceClient = new GraphServiceClient(clientSecretCredential, new List<string> { ".default" });
             return new GraphService(graphServiceClient);
         });
 
