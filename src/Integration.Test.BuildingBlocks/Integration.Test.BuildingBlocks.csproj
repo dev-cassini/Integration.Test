@@ -1,9 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <UserSecretsId>02817053-eb3d-4d88-b04a-915e1ea469b4</UserSecretsId>
     </PropertyGroup>
-
+    
+    <ItemGroup>
+        <PackageReference Include="Azure.Identity" Version="1.10.0" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+        <PackageReference Include="Microsoft.Graph" Version="5.22.0" />
+    </ItemGroup>
+    
 </Project>
