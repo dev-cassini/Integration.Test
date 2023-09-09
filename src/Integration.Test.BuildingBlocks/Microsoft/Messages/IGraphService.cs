@@ -1,6 +1,6 @@
 using Microsoft.Graph.Models;
 
-namespace Integration.Test.BuildingBlocks.Email.Microsoft;
+namespace Integration.Test.BuildingBlocks.Microsoft.Messages;
 
 public interface IGraphService
 {

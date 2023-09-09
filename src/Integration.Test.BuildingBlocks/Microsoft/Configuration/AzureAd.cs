@@ -1,4 +1,4 @@
-namespace Integration.Test.BuildingBlocks.Email.Microsoft.Configuration;
+namespace Integration.Test.BuildingBlocks.Microsoft.Configuration;
 
 public sealed class AzureAd
 {

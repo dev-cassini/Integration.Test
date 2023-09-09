@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Options;
 
-namespace Integration.Test.BuildingBlocks.Email.Microsoft.Configuration.Validators;
+namespace Integration.Test.BuildingBlocks.Microsoft.Configuration.Validators;
 
-public class AzureAdValidator : IValidateOptions<AzureAd>
+internal class AzureAdValidator : IValidateOptions<AzureAd>
 {
     public ValidateOptionsResult Validate(string name, AzureAd options)
     {
