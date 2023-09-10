@@ -18,9 +18,9 @@ public class Configurator
         _service = service;
     }
 
-    public async Task As(User user)
+    public void As(User user)
     {
-        var token = await _passwordTokenStore.GetAsync(user);
+        var token = _passwordTokenStore.GetAsync(user);
         _service.AuthenticationHeaderValue = new AuthenticationHeaderValue("Bearer", token);
     }
 }

@@ -1,5 +1,7 @@
+using System.Collections.ObjectModel;
 using IdentityModel;
 using Integration.Test.BuildingBlocks.Auth.Configuration;
+using Integration.Test.BuildingBlocks.Auth.GrantTypes.Password.Exceptions;
 
 namespace Integration.Test.BuildingBlocks.Auth.GrantTypes.Password;
 
@@ -9,9 +11,16 @@ namespace Integration.Test.BuildingBlocks.Auth.GrantTypes.Password;
 public interface ITokenStore
 {
     /// <summary>
-    /// Return token from cache if one already exists for user, else request one using <see cref="IHttpService"/>.
+    /// A store of user tokens, populated on construction of the store, with key being the
+    /// email of the user who the token belongs to.
     /// </summary>
-    /// <param name="user">The user who the token is requested on behalf of.</param>
+    ReadOnlyDictionary<string, string> Tokens { get; }
+    
+    /// <summary>
+    /// Return token from store if one exists for user.
+    /// </summary>
+    /// <param name="user">The user who the token belongs to.</param>
     /// <returns>The access token.</returns>
-    Task<string> GetAsync(User user);
+    /// <exception cref="UserTokenNotFoundException">Token not registered for user.</exception>
+    string GetAsync(User user);
 }

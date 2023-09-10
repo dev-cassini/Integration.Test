@@ -1,27 +1,25 @@
+using System.Collections.ObjectModel;
 using Integration.Test.BuildingBlocks.Auth.Configuration;
+using Integration.Test.BuildingBlocks.Auth.GrantTypes.Password.Exceptions;
 
 namespace Integration.Test.BuildingBlocks.Auth.GrantTypes.Password;
 
 public class TokenStore : ITokenStore
 {
-    private readonly Dictionary<string, string> _tokens = new();
-    private readonly IHttpService _httpService;
+    public ReadOnlyDictionary<string, string> Tokens { get; }
 
-    public TokenStore(IHttpService httpService)
+    public TokenStore(ReadOnlyDictionary<string, string> tokens)
     {
-        _httpService = httpService;
+        Tokens = tokens;
     }
     
-    public async Task<string> GetAsync(User user)
+    public string GetAsync(User user)
     {
-        if (_tokens.TryGetValue(user.EmailAddress, out var token))
+        if (Tokens.TryGetValue(user.EmailAddress, out var token))
         {
             return token;
         }
 
-        var tokenResponse = await _httpService.RequestTokenAsync(user);
-        _tokens.Add(user.EmailAddress, tokenResponse.AccessToken!);
-
-        return tokenResponse.AccessToken!;
+        throw new UserTokenNotFoundException(user);
     }
 }

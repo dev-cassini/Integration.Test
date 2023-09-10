@@ -6,10 +6,10 @@ using GrantTypes = BuildingBlocks.Auth.GrantTypes;
 
 public static class ServiceExtensions
 {
-    public static IService ConfigureAuthentication(
-        this IService service, 
+    public static T ConfigureAuthentication<T>(
+        this T service, 
         IServiceProvider serviceProvider,
-        Action<Configurator> configuratorAction)
+        Action<Configurator> configuratorAction) where T : IService
     {
         var passwordTokenStore = serviceProvider.GetRequiredService<GrantTypes.Password.ITokenStore>();
         var configurator = new Configurator(passwordTokenStore, service);
