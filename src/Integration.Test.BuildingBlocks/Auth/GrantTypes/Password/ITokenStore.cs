@@ -22,5 +22,5 @@ public interface ITokenStore
     /// <param name="user">The user who the token belongs to.</param>
     /// <returns>The access token.</returns>
     /// <exception cref="UserTokenNotFoundException">Token not registered for user.</exception>
-    string GetAsync(User user);
+    string Get(User user);
 }

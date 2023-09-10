@@ -13,7 +13,7 @@ public class TokenStore : ITokenStore
         Tokens = tokens;
     }
     
-    public string GetAsync(User user)
+    public string Get(User user)
     {
         if (Tokens.TryGetValue(user.EmailAddress, out var token))
         {

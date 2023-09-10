@@ -20,7 +20,7 @@ public class Configurator
 
     public void As(User user)
     {
-        var token = _passwordTokenStore.GetAsync(user);
+        var token = _passwordTokenStore.Get(user);
         _service.AuthenticationHeaderValue = new AuthenticationHeaderValue("Bearer", token);
     }
 }
