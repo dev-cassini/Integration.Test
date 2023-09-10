@@ -19,7 +19,7 @@ public class TokenStore : ITokenStore
     
     public string Get(User user)
     {
-        if (_tokens.TryGetValue(user.EmailAddress, out var token))
+        if (_tokens.TryGetValue(user.Username, out var token))
         {
             return token;
         }

@@ -5,8 +5,25 @@ using Microsoft.Extensions.Options;
 
 namespace Integration.Test.BuildingBlocks.Auth.Configuration;
 
-internal static class ServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
+    public static IServiceCollection AddUsers(
+        this IServiceCollection serviceCollection,
+        IConfiguration configuration,
+        List<string> userTypes)
+    {
+        serviceCollection.AddSingleton<IValidateOptions<User>, UserValidator>();
+        foreach (var userType in userTypes)
+        {
+            serviceCollection
+                .AddOptions<User>()
+                .Configure(configuration.GetSection($"{nameof(Auth)}:{nameof(Users)}:{userType}").Bind)
+                .ValidateOnStart();
+        }
+
+        return serviceCollection;
+    }
+    
     internal static IServiceCollection AddAuthConfiguration(
         this IServiceCollection serviceCollection,
         IConfiguration configuration)

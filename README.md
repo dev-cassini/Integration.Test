@@ -24,3 +24,8 @@ Client Secret
 ```powershell
 dotnet user-secrets set "Auth:Client:Secret" "CLIENT_SECRET_HERE"
 ```
+
+Users
+```powershell
+dotnet user-secrets set "Auth:Users:Admin:Password" "ADMIN_PASSWORD_HERE"
+```

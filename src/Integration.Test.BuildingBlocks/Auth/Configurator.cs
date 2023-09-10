@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using Integration.Test.BuildingBlocks.Auth.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Integration.Test.BuildingBlocks.Auth;
 
@@ -20,13 +21,13 @@ public class Configurator
         {
             var tokens = new Dictionary<string, string>();
             var passwordHttpService = provider.GetRequiredService<GrantTypes.Password.IHttpService>();
-            var users = provider.GetServices<User>();
+            var users = provider.GetServices<IOptions<User>>();
             foreach (var user in users)
             {
-                var token = Task.Run(async () => await passwordHttpService.RequestTokenAsync(user, CancellationToken.None))
+                var token = Task.Run(async () => await passwordHttpService.RequestTokenAsync(user.Value, CancellationToken.None))
                     .ConfigureAwait(false).GetAwaiter().GetResult();
 
-                tokens.Add(user.EmailAddress, token.AccessToken!);
+                tokens.Add(user.Value.Username, token.AccessToken!);
             }
 
             return new GrantTypes.Password.TokenStore(new ReadOnlyDictionary<string, string>(tokens));

@@ -38,7 +38,7 @@ public class HttpService : IHttpService
             Address = discoveryDocument.TokenEndpoint,
             ClientId = _client.Id,
             ClientSecret = _client.Secret,
-            UserName = user.EmailAddress,
+            UserName = user.Username,
             Password = user.Password
         }, cancellationToken);
 
