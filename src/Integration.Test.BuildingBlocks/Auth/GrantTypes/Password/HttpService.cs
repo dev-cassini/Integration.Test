@@ -16,7 +16,7 @@ public class HttpService : IHttpService
         _jwtBearer = jwtBearerOptions.Value;
     }
     
-    public async Task<TokenResponse> RequestTokenAsync(User user)
+    public async Task<TokenResponse> RequestTokenAsync(User user, CancellationToken cancellationToken)
     {
         var httpClient = new HttpClient();
         var discoveryDocument = await httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
@@ -26,7 +26,7 @@ public class HttpService : IHttpService
             {
                 RequireHttps = _jwtBearer.RequireHttpsMetadata
             }
-        });
+        }, cancellationToken);
 
         if (discoveryDocument.IsError)
         {
@@ -40,7 +40,7 @@ public class HttpService : IHttpService
             ClientSecret = _client.Secret,
             UserName = user.EmailAddress,
             Password = user.Password
-        });
+        }, cancellationToken);
 
         if (token.IsError)
         {

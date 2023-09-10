@@ -10,6 +10,7 @@ public interface IHttpService
     /// Request a token using <see cref="OidcConstants.GrantTypes.Password"/> flow.
     /// </summary>
     /// <param name="user">The user who the token is requested on behalf of.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The <see cref="TokenResponse"/> from auth server.</returns>
-    Task<TokenResponse> RequestTokenAsync(User user);
+    Task<TokenResponse> RequestTokenAsync(User user, CancellationToken cancellationToken);
 }
