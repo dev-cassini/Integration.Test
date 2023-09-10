@@ -23,8 +23,8 @@ public class Configurator
             var users = provider.GetServices<User>();
             foreach (var user in users)
             {
-                var token = passwordHttpService.RequestTokenAsync(user, CancellationToken.None)
-                    .GetAwaiter().GetResult();
+                var token = Task.Run(async () => await passwordHttpService.RequestTokenAsync(user, CancellationToken.None))
+                    .ConfigureAwait(false).GetAwaiter().GetResult();
 
                 tokens.Add(user.EmailAddress, token.AccessToken!);
             }
@@ -32,6 +32,21 @@ public class Configurator
             return new GrantTypes.Password.TokenStore(new ReadOnlyDictionary<string, string>(tokens));
         });
         
+        return this;
+    }
+
+    public Configurator AddClientCredentialsFlow()
+    {
+        _serviceCollection.AddScoped<GrantTypes.ClientCredentials.IHttpService, GrantTypes.ClientCredentials.HttpService>();
+        _serviceCollection.AddSingleton<GrantTypes.ClientCredentials.ITokenStore, GrantTypes.ClientCredentials.TokenStore>(provider =>
+        {
+            var clientCredentialsHttpService = provider.GetRequiredService<GrantTypes.ClientCredentials.IHttpService>();
+            var token = Task.Run(async () => await clientCredentialsHttpService.RequestTokenAsync(CancellationToken.None))
+                .ConfigureAwait(false).GetAwaiter().GetResult();
+
+            return new GrantTypes.ClientCredentials.TokenStore(token.AccessToken!);
+        });
+
         return this;
     }
 }

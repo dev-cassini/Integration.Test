@@ -11,8 +11,9 @@ public static class ServiceExtensions
         IServiceProvider serviceProvider,
         Action<Configurator> configuratorAction) where T : IService
     {
-        var passwordTokenStore = serviceProvider.GetRequiredService<GrantTypes.Password.ITokenStore>();
-        var configurator = new Configurator(passwordTokenStore, service);
+        var passwordTokenStore = serviceProvider.GetService<GrantTypes.Password.ITokenStore>();
+        var clientCredentialsTokenStore = serviceProvider.GetService<GrantTypes.ClientCredentials.ITokenStore>();
+        var configurator = new Configurator(passwordTokenStore, clientCredentialsTokenStore, service);
         configuratorAction.Invoke(configurator);
 
         return service;
