@@ -14,6 +14,8 @@ public class Configurator
     public Configurator AddPasswordFlow()
     {
         _serviceCollection.AddScoped<GrantTypes.Password.IHttpService, GrantTypes.Password.HttpService>();
+        _serviceCollection.AddSingleton<GrantTypes.Password.ITokenStore, GrantTypes.Password.TokenStore>();
+        
         return this;
     }
 }
