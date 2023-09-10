@@ -6,16 +6,20 @@ namespace Integration.Test.BuildingBlocks.Auth.GrantTypes.Password;
 
 public class TokenStore : ITokenStore
 {
-    public ReadOnlyDictionary<string, string> Tokens { get; }
+    /// <summary>
+    /// A store of user tokens, populated on construction of the store, with key being the
+    /// email of the user who the token belongs to.
+    /// </summary>
+    private readonly ReadOnlyDictionary<string, string> _tokens;
 
     public TokenStore(ReadOnlyDictionary<string, string> tokens)
     {
-        Tokens = tokens;
+        _tokens = tokens;
     }
     
     public string Get(User user)
     {
-        if (Tokens.TryGetValue(user.EmailAddress, out var token))
+        if (_tokens.TryGetValue(user.EmailAddress, out var token))
         {
             return token;
         }
