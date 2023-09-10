@@ -12,8 +12,15 @@ https://specflow.org/
 
 https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-7.0&tabs=windows
 
-Add Azure AD client secret to secrets storage by running the following command from the root of Integration.Test.BuildingBlocks:
+To avoid committing sensitive information to source control, add the following secrets 
+to secrets storage by running the following commands from the root of Integration.Test.BuildingBlocks:
 
+Azure AD
 ```powershell
 dotnet user-secrets set "AzureAd:ClientSecret" "CLIENT_SECRET_HERE"
+```
+
+Client Secret
+```powershell
+dotnet user-secrets set "Auth:Client:Secret" "CLIENT_SECRET_HERE"
 ```
